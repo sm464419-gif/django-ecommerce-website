@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
+    'cart',
 ]
+CART_SESSION_ID='cart'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount',
             ],
         },
     },
@@ -125,6 +128,17 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
+
+# Source - https://stackoverflow.com/a/6367458
+# Posted by Jordan, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-04-05, License - CC BY-SA 3.0
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'me@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
+
 
 LOGIN_REDIRECT_URL='index'
 LOGOUT_REDIRECT_URL='index'

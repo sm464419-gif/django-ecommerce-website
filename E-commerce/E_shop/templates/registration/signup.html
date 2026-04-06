@@ -6,7 +6,7 @@
 			<div class="col-sm-4 col-sm-offset-1">
                 <div class="Signup-form"><!--Signup form-->
 						<h2>New user signup</h2>
-                        <form method="POST">
+                        <form method="post">
 
                             {% csrf_token %}
                             {% for field in form %}
@@ -14,7 +14,7 @@
                             <p> {{field}}</p>
                             {% endfor %}
 
-							<button class="btn btn - default" type="Submit">Signup</button><br>
+							<button class="btn btn-default" type="submit">Signup</button><br>
                             <span style="margin-left:80px;">Already have an account</span>&nbsp;<a href="{% url 'login' %}">Login</a>
 						</form>
 					</div><!--/Signup form-->

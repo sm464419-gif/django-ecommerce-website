@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'cart',
+
 ]
-CART_SESSION_ID='cart'
+CART_SESSION_ID= 'cart'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

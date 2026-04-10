@@ -84,3 +84,15 @@ def cart_clear(request):
 @login_required(login_url="accounts/login/")
 def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
+
+def Contact_Page(request):
+    if request.method =="POST":
+        contact = Contact_us(
+            name= request.POST.get('name'),
+            email=request.POST.get('email'),
+            subject=request.POST.get('subject'),
+            message=request.POST.get('message'),
+        )
+        contact.save()
+
+    return render(request, 'contact.html')

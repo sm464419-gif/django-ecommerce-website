@@ -1,9 +1,11 @@
-from django.shortcuts import render,redirect
-from app.models import Category,Product
+from django.shortcuts import render,redirect,HttpResponse
+from app.models import Category,Product,Order
+
 from django.contrib.auth import authenticate,login
 from app.models import UserCreateForm
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -86,7 +88,7 @@ def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
 
 def Contact_Page(request):
-    if request.method =="POST":
+    if request.method == 'POST':
         contact = Contact_us(
             name= request.POST.get('name'),
             email=request.POST.get('email'),
@@ -96,3 +98,34 @@ def Contact_Page(request):
         contact.save()
 
     return render(request, 'contact.html')
+
+def Checkout(request):
+    if request.method=="POST":
+        address= request.POST.get('address')
+        phone = request.POST.get('phone')
+        pincode = request.POST.get('pincode')
+        cart= request.session.get('cart')
+        uid= request.session.get('_auth_user_id')
+        user= User.objects.get(pk=uid)
+        print(address,phone,pincode)
+        print(cart,user)
+        for i in cart:
+            a= (int(cart[i]['price']))
+            b=  cart[i]['quantity']
+            total= a*b
+            order= Order(
+                user=user,
+                product= cart[i]['name'],
+                price= cart[i]['price'],
+                quantity= cart[i]['quantity'],
+                image= cart[i]['image'],
+                address= address,
+                phone= phone,
+                pincode= pincode,
+                total= total,
+
+
+            )
+            order.save()
+        return redirect("index")
+    return HttpResponse("This is checkout page")

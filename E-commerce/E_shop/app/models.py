@@ -70,14 +70,15 @@ class Contact_us(models.Model):
 
 class Order(models.Model):
     image= models.ImageField(upload_to= 'ecommerce/order/image')
-    product= models.ForeignKey(Product,on_delete=models.CASCADE)
+    product= models.CharField(max_length=1000, default=' ')
     user= models.ForeignKey(User,on_delete= models.CASCADE)
     quantity= models.CharField(max_length=5)
     price= models.IntegerField()
     address= models.TextField()
     phone= models.CharField(max_length=10)
     pincode = models.CharField(max_length=10)
+    total= models.CharField(max_length=1000,default=' ')
     date= models.DateField(default= datetime.datetime.today)
 
     def __str__(self):
-        return self.product.name
+        return self.product

@@ -17,12 +17,17 @@ class Subcategory(models.Model):
     def __str__(self):
          return self.name
 
+class Brand(models.Model):
+    name= models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null= False, default='')
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=False, default='')
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True)
     image= models.ImageField(upload_to='ecoming')
     name= models.CharField(max_length=100)
     price= models.IntegerField()
@@ -61,7 +66,7 @@ class UserCreateForm(UserCreationForm):
 
 class Contact_us(models.Model):
         name= models.CharField(max_length=100)
-        email = models.CharField(max_length=100)
+        email = models.EmailField(max_length=100)
         subject = models.CharField(max_length=100)
         message = models.TextField()
 
@@ -70,14 +75,15 @@ class Contact_us(models.Model):
 
 class Order(models.Model):
     image= models.ImageField(upload_to= 'ecommerce/order/image')
-    product= models.ForeignKey(Product,on_delete=models.CASCADE)
+    product= models.CharField(max_length=1000, default=' ')
     user= models.ForeignKey(User,on_delete= models.CASCADE)
+    price = models.IntegerField()
     quantity= models.CharField(max_length=5)
-    price= models.IntegerField()
+    total = models.CharField(max_length=1000, default=' ')
     address= models.TextField()
     phone= models.CharField(max_length=10)
     pincode = models.CharField(max_length=10)
     date= models.DateField(default= datetime.datetime.today)
 
     def __str__(self):
-        return self.product.name
+        return self.product

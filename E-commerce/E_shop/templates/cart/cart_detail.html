@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-{% block cody %}
-{% load cart_tag }
-<section id="cart_items">
+{% load cart_tag %}
+
+{% block body %}
+
+	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
@@ -22,7 +24,7 @@
 						</tr>
 					</thead>
 					<tbody>
-                    {% for key,value in request.session.cart.items %}
+                    {% for key, value in request.session.cart.items %}
 						<tr>
 							<td class="cart_product">
 								<a href=""><img src="{{value.image}}" alt=""></a>
@@ -32,7 +34,7 @@
 
 							</td>
 							<td class="cart_price">
-								<p>৳{{value.price}}</p>
+								<p> ৳{{value.price}}</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
@@ -42,50 +44,78 @@
 								</div>
 							</td>
 							<td class="cart_total">
-								<p class="cart_total_price">৳{{value.price|multiply:value.quantity}}</p>
+								<p class="cart_total_price"> ৳{{value.price|multiply:value.quantity}}</p>
 							</td>
 							<td class="cart_delete">
 								<a class="cart_quantity_delete" href="{% url 'item_clear' key %}"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-                        <a href="{%  url 'cart_clear' %}">Clear cart</a>
-                         {% endfor %}
+
+                        {% endfor %}
+
+
 					</tbody>
                     <tfoot>
                     <td>
 
+                       </td>
+                    <td>
+
+                       </td>
+                    <td>
+                        <hr>
+                        <h4> Sub Total :</h4>
                     </td>
                     <td>
 
                     </td>
                     <td>
                         <hr>
-                        <h4>Sub Total: </h4>
+                       <h3> {{cart_total_amount}} </h3>
                     </td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <hr>
-                        <h3>{{cart_total_amount}}</h3>
-                    </td>
-
-
-
-
                     </tfoot>
 				</table>
 			</div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="float:right">Checkout</button>
 		</div>
 	</section> <!--/#cart_items-->
+  <br>
 
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/checkout/">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Phone:</label>
+            <input type="text" name="phone" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Address:</label>
+            <textarea class="form-control" name="address" id="message-text"></textarea>
+          </div>
+             <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Pincode:</label>
+            <input type="text" name="pincode" class="form-control" >
+          </div>
+            <div class="modal-footer">
 
+        <button type="submit" class="btn btn-primary">Checkout</button>
+      </div>
+        </form>
+      </div>
 
-
-
-
-
+    </div>
+  </div>
+</div>
 
 
 
